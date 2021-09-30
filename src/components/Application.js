@@ -1,8 +1,56 @@
 import React, { useState } from "react";
 import DayList from "./DayList";
+import Appointment from "./Appointment";
 import "components/Application.scss";
 
-export const days = [
+const appointments = [
+  {
+    id: 1,
+    time: "12pm",
+  },
+  {
+    id: 2,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+  {
+    id: 3,
+    time: "4pm",
+    interview: {
+      student: "Jane Smith",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+  {
+    id: 4,
+    time: "2pm",
+  },
+  {
+    id: 5,
+    time: "2pm",
+    interview: {
+      student: "Sammie Ho",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+];
+
+const days = [
   {
     id: 1,
     name: "Monday",
@@ -23,6 +71,17 @@ export const days = [
 export default function Application() {
 
   const [day, setDay] = useState("Monday");
+
+  const appointmentList = appointments.map(appointment => {
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={appointment.interview}
+      />
+    );
+  })
 
   return (
     <main className="layout">
@@ -47,6 +106,8 @@ export default function Application() {
         />
       </section>
       <section className="schedule">
+        {appointmentList}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
