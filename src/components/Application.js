@@ -36,6 +36,8 @@ export default function Application() {
 
   const schedule = appointments.map(appointment => {
 
+    console.log(appointment)
+
     const interview = getInterview(state, appointment.interview);
 
     return (
