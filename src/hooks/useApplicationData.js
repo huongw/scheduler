@@ -20,11 +20,26 @@ export function useApplicationData() {
         const days = all[0].data;
         const appointments = all[1].data;
         const interviewers = all[2].data;
-        setState(prev => ({ ...prev, days, appointments, interviewers })) // saves new state and replaces writing state.days and state.appointments
+        setState(prev => ({ ...prev, days, appointments, interviewers }))
       })
   }, [])
 
   const setDay = day => setState({ ...state, day });
+
+  function updateSpots(newAppointments) {
+
+    return state.days.map((day) => {
+      let freeSpots = 0;
+
+      for (const id of day.appointments) {
+        if (!newAppointments[id].interview) {
+          freeSpots++
+        }
+      }
+
+      return { ...day, spots: freeSpots }
+    })
+  }
 
   // CREATE/EDIT THE INTERVIEW --------------------------------------------------
   function bookInterview(id, interview) {
@@ -40,7 +55,7 @@ export function useApplicationData() {
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState({ ...state, appointments })
+        setState({ ...state, appointments, days: updateSpots(appointments) })
       })
 
   }
@@ -49,7 +64,7 @@ export function useApplicationData() {
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: null
     };
 
     const appointments = {
@@ -59,9 +74,10 @@ export function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState({ ...state, appointments })
+        setState({ ...state, appointments, days: updateSpots(appointments) })
       })
   }
 
   return { state, setDay, bookInterview, cancelInterview };
 }
+
