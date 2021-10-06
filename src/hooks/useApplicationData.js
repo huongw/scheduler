@@ -26,6 +26,7 @@ export function useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
+  // UPDATE AVAILABLE SPOTS ------------------------------------------------------
   function updateSpots(newAppointments) {
 
     return state.days.map((day) => {
@@ -60,7 +61,7 @@ export function useApplicationData() {
 
   }
 
-  // DELETE THE INTERVIEW ----------------------------------------------
+  // DELETE THE INTERVIEW ---------------------------------------------------------
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],

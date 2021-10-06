@@ -1,30 +1,40 @@
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
-import { useState } from "react";
-import React from "react";
+
+import React, { useState } from "react";
 
 export default function Form(props) {
   const { interviewers, onSave, onCancel } = props;
 
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [error, setError] = useState("");
 
   function reset() {
     setName("");
+    setError("");
     setInterviewer(null);
   }
 
   function cancel() {
     reset();
-    onCancel(interviewer);
+    onCancel();
   }
 
-  function save() {
+  function validate() {
+
+    if (name === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+
+    // if (!interviewer) {
+    //   setError("Please select an interviewer");
+    //   return;
+    // }
+
+    setError("");
     onSave(name, interviewer);
-  }
-
-  function onChange(event) {
-    setName(event.target.value);
   }
 
   return (
@@ -36,16 +46,26 @@ export default function Form(props) {
             name="name"
             type="text"
             value={name}
-            onChange={onChange}
+            onChange={(event) => setName(event.target.value)}
             placeholder="Enter Student Name"
+            data-testid="student-name-input"
           />
         </form>
-        <InterviewerList interviewers={interviewers} value={interviewer} onChange={setInterviewer} />
+        <section className="appointment__validation">{error}</section>
+        <InterviewerList
+          interviewers={interviewers}
+          value={interviewer}
+          onChange={setInterviewer}
+        />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={save}>Save</Button>
+          <Button danger onClick={cancel}>
+            Cancel
+          </Button>
+          <Button confirm onClick={validate}>
+            Save
+          </Button>
         </section>
       </section>
     </main>
