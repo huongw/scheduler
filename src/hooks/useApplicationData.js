@@ -27,14 +27,16 @@ export function useApplicationData() {
   const setDay = day => setState({ ...state, day });
 
   // UPDATE AVAILABLE SPOTS ------------------------------------------------------
-  function updateSpots(newAppointments, day) {
+  function updateSpots(newAppointments) {
     return state.days.map((day) => {
       let freeSpots = 0;
+
       for (const id of day.appointments) {
         if (!newAppointments[id].interview) {
           freeSpots++;
         }
       }
+
       return { ...day, spots: freeSpots };
     });
   };
@@ -53,9 +55,8 @@ export function useApplicationData() {
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState({ ...state, appointments, days: updateSpots(appointments, state.day) })
+        setState({ ...state, appointments, days: updateSpots(appointments) });
       })
-
   };
 
   // DELETE THE INTERVIEW ---------------------------------------------------------
@@ -72,7 +73,7 @@ export function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState({ ...state, appointments, days: updateSpots(appointments, state.day) });
+        setState({ ...state, appointments, days: updateSpots(appointments) });
       })
   };
 
