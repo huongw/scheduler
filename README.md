@@ -1,3 +1,7 @@
+!["Home page of Scheduler"]()
+!["Create a new appointment"]()
+!["Show error"]()
+
 # Interview Scheduler
 
 ## Setup
