@@ -7,28 +7,13 @@ export default function useVisualMode(initial) {
     setHistory(prev => replace ? [...prev.slice(0, prev.length - 1), mode] : [...prev, mode]);
   }
 
-  // This is what we are doing in the above code ^
-  //----------------------------------------------
-  // function transition(mode, replace = false) {
-  //   setHistory(prev => {
-  //     const newHistory = [...prev];
-
-  //     if (replace) {
-  //       newHistory.pop()
-  //     }
-
-  //     newHistory.push(mode)
-  //     return newHistory
-  //   });
-  // }
-
   function back() {
     if (history.length < 2) {
-      return
+      return;
     }
 
     setHistory(prev => {
-      return [...prev.slice(0, history.length - 1)]
+      return [...prev.slice(0, history.length - 1)];
     })
   }
 

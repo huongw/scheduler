@@ -1,6 +1,8 @@
-import "components/DayListItem.scss";
-import classNames from "classnames";
 import React from "react";
+
+import classNames from "classnames";
+
+import "components/DayListItem.scss";
 
 export default function DayListItem(props) {
   const { name, spots, selected, setDay } = props;
@@ -23,7 +25,7 @@ export default function DayListItem(props) {
   }
 
   return (
-    <li onClick={() => setDay(name)} className={dayClass}>
+    <li onClick={() => setDay(name)} className={dayClass} data-testid="day">
       <h2 className="text--regular">{name}</h2>
       <h3 className="text--light">{formatSpots()}</h3>
     </li>

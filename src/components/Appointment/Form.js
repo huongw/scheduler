@@ -1,13 +1,16 @@
+import React, { useState } from "react";
+
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
-import React, { useState } from "react";
 
 export default function Form(props) {
   const { interviewers, onSave, onCancel } = props;
 
   const [name, setName] = useState(props.name || "");
+
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+
   const [error, setError] = useState("");
 
   function reset() {
@@ -21,17 +24,28 @@ export default function Form(props) {
     onCancel();
   }
 
+  // Validate that the input does not include integers
+  function numberInName(name) {
+    const numRegEx = /\d/;
+    const numInName = name.search(numRegEx);
+    return !(numInName === -1);
+  }
+
   function validate() {
+    if (numberInName(name)) {
+      setError("Your name must only contain letters");
+      return;
+    }
 
     if (name === "") {
       setError("Student name cannot be blank");
       return;
     }
 
-    // if (!interviewer) {
-    //   setError("Please select an interviewer");
-    //   return;
-    // }
+    if (!interviewer) {
+      setError("Please select an interviewer");
+      return;
+    }
 
     setError("");
     onSave(name, interviewer);

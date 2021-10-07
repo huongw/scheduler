@@ -1,13 +1,16 @@
+import React from "react";
+
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Error from "./Error";
-import "components/Appointment/styles.scss";
-import useVisualMode from "hooks/useVisualMode";
-import React from "react";
 import Confirm from "./Confirm";
+
+import "components/Appointment/styles.scss";
+
+import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -15,8 +18,8 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVE = "SAVE";
 
-const CONFIRM = "CONFIRM"
-const DELETING = "DELETE"
+const CONFIRM = "CONFIRM";
+const DELETING = "DELETE";
 
 const EDIT = "EDIT";
 
@@ -31,7 +34,7 @@ export default function Appointment(props) {
   );
 
   const onAdd = function () {
-    transition(CREATE)
+    transition(CREATE);
   }
 
   // CREATE AN INTERVIEW ---------------------------------------------------
@@ -43,13 +46,13 @@ export default function Appointment(props) {
 
     transition(SAVE) // LOADING SCREEN FOR SAVE
 
-    bookInterview(id, interview) // BOOKS INTERVIEW
+    bookInterview(id, interview)
       .then(() => {
-        transition(SHOW)
+        transition(SHOW);
       })
       .catch((err) => {
-        transition(ERROR_SAVE, true)
-        console.log(err.message)
+        transition(ERROR_SAVE, true);
+        console.log(err.message);
       })
   }
 
@@ -60,26 +63,26 @@ export default function Appointment(props) {
       interviewer
     };
 
-    transition(SAVE)
+    transition(SAVE);
 
     bookInterview(id, interview)
       .then(() => {
-        transition(SHOW)
+        transition(SHOW);
       })
   }
 
   // WHEN YOU WANT TO DELETE INTERVIEW -------------------------------------
 
   function onConfirm() {
-    transition(DELETING, true)
+    transition(DELETING, true); // LOADING SCREEN FOR DELETE
 
-    cancelInterview(id, interview) // REMOVES INTERVIEW
+    cancelInterview(id, interview)
       .then(() => {
         transition(EMPTY);
       })
       .catch((err) => {
-        transition(ERROR_DELETE, true)
-        console.log(err.message)
+        transition(ERROR_DELETE, true);
+        console.log(err.message);
       })
   }
 
