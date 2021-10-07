@@ -1,6 +1,6 @@
-!["Home page of Scheduler"]()
-!["Create a new appointment"]()
-!["Show error"]()
+!["Home page of Scheduler"](https://raw.githubusercontent.com/huongw/scheduler/master/docs/home.png)
+!["Create a new appointment"](https://raw.githubusercontent.com/huongw/scheduler/master/docs/create.png)
+!["Show error"](https://raw.githubusercontent.com/huongw/scheduler/master/docs/error.png)
 
 # Interview Scheduler
 
